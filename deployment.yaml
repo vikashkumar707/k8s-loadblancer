@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vikash-django-app-deployment
+ 
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  selector:
+    matchLabels:
+      app: vikash-app
+  template:
+    metadata:
+      labels:
+        app: vikash-app
+    spec:
+      containers:
+      - name: vikash-app
+        image: vikashkumar707/vikash-test
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8000
